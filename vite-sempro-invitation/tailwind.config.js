@@ -8,15 +8,27 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Inter', 'sans-serif'], // Anda bisa tambahkan font lain jika ingin sesuai desain
-        'display': ['"Handjet"', 'cursive'], // Contoh font untuk judul seperti "Selamat"
-        'heading': ['"Pacifico"', 'cursive'], // Contoh font untuk "Seminar Proposal"
+        'sans': ['Inter', 'sans-serif'],
+        'display': ['"Handjet"', 'cursive'],
+        'heading': ['"Pacifico"', 'cursive'],
       },
       colors: {
-        'primary-blue': '#0284c7', // Tailwind sky-600
-        'soft-blue': '#e0f2fe', // Untuk background yang lebih terang
-        'dark-text': '#334155', // Tailwind slate-700
-        'accent-yellow': '#f59e0b', // Menambahkan warna kuning (amber-500)
+        // Palet Biru Dominan (Gelap)
+        'primary-dark': '#1e40af', // blue-800
+        'primary-dark-hover': '#1d4ed8', // blue-700
+        
+        // Palet Biru Aksen (Cerah)
+        'primary-light': '#0284c7', // sky-600
+        'primary-light-hover': '#0369a1', // sky-700
+
+        // Teks untuk latar belakang gelap
+        'text-on-dark': '#f8fafc', // slate-50 (Putih)
+        'text-on-dark-muted': '#cbd5e1', // slate-300 (Abu-abu muda)
+
+        // Latar belakang netral & muted
+        'page-bg': '#f3f4f6', // gray-100 (Latar belakang halaman)
+        'muted-bg': '#f0f9ff', // sky-50 (Untuk kotak info di dalam kartu)
+        'muted-text': '#0c4a6e', // sky-900 (Teks untuk di atas 'muted-bg')
       }
     },
   },
