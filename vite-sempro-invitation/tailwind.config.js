@@ -16,6 +16,7 @@ export default {
         'primary-blue': '#0284c7', // Tailwind sky-600
         'soft-blue': '#e0f2fe', // Untuk background yang lebih terang
         'dark-text': '#334155', // Tailwind slate-700
+        'accent-yellow': '#f59e0b', // Menambahkan warna kuning (amber-500)
       }
     },
   },
