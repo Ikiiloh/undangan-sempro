@@ -203,7 +203,7 @@ function EventDetails({ date, time, location }: { date: string; time: string; lo
 // Komponen Footer
 function Footer() {
   return (
-    <footer className="text-center font-title text-lg text-brand-dark pt-8">
+    <footer className="text-center font-title text-xs text-brand-dark mt-12 mb-4">
       <p>
         Dibuat oleh{" "}
         <a
