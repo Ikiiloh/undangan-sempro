@@ -1,20 +1,3 @@
-/* Universal box-sizing */
-html {
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #F0F8FF; /* AliceBlue, a very light blue */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 0; /* Removed padding */
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

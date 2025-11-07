@@ -1,267 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Undangan Seminar Proposal - Samira Hadid</title>
-    
+
     <!-- 1. Impor Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- 2. Impor React & Babel -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- 3. Impor Font dari Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- 4. Konfigurasi Kustom Tailwind -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        // Font yang mirip dengan "Selamat"
-                        title: ['Fredoka', 'cursive'], 
-                        // Font yang mirip dengan "Samira Hadid"
-                        name: ['Caveat', 'cursive'],
-                    },
-                    colors: {
-                        // Palet warna dari desain
-                        brand: {
-                            bg: '#F0F9FF',      // Latar belakang (sky-50)
-                            grid: '#BAE6FD',     // Latar belakang grid (sky-200)
-                            accent: '#FACC15',   // Kuning (yellow-400)
-                            'accent-dark': '#EAB308', // Kuning hover (yellow-500)
-                            dark: '#1F2937',     // Teks gelap (gray-800)
-                            light: '#6B7280',    // Teks terang (gray-500)
-                        }
-                    },
-                    // Animasi untuk doodle
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        spinSlow: {
-                            '0%': { transform: 'rotate(0deg)' },
-                            '100%': { transform: 'rotate(360deg)' },
-                        }
-                    },
-                    animation: {
-                        float: 'float 4s ease-in-out infinite',
-                        spinSlow: 'spinSlow 20s linear infinite',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- 5. CSS Tambahan untuk Latar Belakang Grid -->
-    <style>
-        .grid-background {
-            background-color: #BAE6FD; /* brand.grid */
-            background-image: 
-                linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px),
-                linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px);
-            background-size: 2rem 2rem; /* Ukuran grid 32px */
-        }
-    </style>
-</head>
-<body class="bg-brand-bg font-sans">
 
-    <!-- 6. Target Root untuk React -->
+    <!-- 2. Impor Font dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Caveat:wght@700&family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 3. Konfigurasi Kustom Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              // Font yang mirip dengan "Selamat"
+              title: ["Fredoka", "cursive"],
+              // Font yang mirip dengan "Samira Hadid"
+              name: ["Caveat", "cursive"],
+            },
+            colors: {
+              // Palet warna dari desain
+              brand: {
+                bg: "#F0F9FF", // Latar belakang (sky-50)
+                grid: "#BAE6FD", // Latar belakang grid (sky-200)
+                accent: "#FACC15", // Kuning (yellow-400)
+                "accent-dark": "#EAB308", // Kuning hover (yellow-500)
+                dark: "#1F2937", // Teks gelap (gray-800)
+                light: "#6B7280", // Teks terang (gray-500)
+              },
+            },
+            // Animasi untuk doodle
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+              spinSlow: {
+                "0%": { transform: "rotate(0deg)" },
+                "100%": { transform: "rotate(360deg)" },
+              },
+            },
+            animation: {
+              float: "float 4s ease-in-out infinite",
+              spinSlow: "spinSlow 20s linear infinite",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-brand-bg font-sans">
+    <!-- 4. Target Root untuk React -->
     <div id="root"></div>
 
-    <!-- 7. Kode React (JSX) -->
-    <script type="text/babel">
-
-        // Komponen Utama
-        function App() {
-            // Data untuk undangan (bisa diganti)
-            const invitationData = {
-                name: "Samira Hadid",
-                title: "SELAMAT",
-                subtitle: "Seminar Proposal",
-                thesisTitle: "Analisa Perkembangan Digital di Daerah Fauget Terhadap Usaha Masyarakat Tahun 2025",
-                date: "Sabtu, 27 Januari",
-                time: "17:00 - Selesai",
-                imageUrl: "https://images.unsplash.com/photo-1520423465871-08690a6390b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=500&q=80"
-            };
-
-            return (
-                <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
-                    {/* Komponen untuk doodle di latar belakang */}
-                    <BackgroundDoodles />
-
-                    {/* Konten Utama */}
-                    <main className="relative z-10 w-full max-w-sm mx-auto flex flex-col items-center space-y-6 sm:space-y-8">
-                        
-                        <Header title={invitationData.title} subtitle={invitationData.subtitle} />
-                        
-                        <ProfileCard name={invitationData.name} imageUrl={invitationData.imageUrl} />
-                        
-                        <ThesisInfo title={invitationData.thesisTitle} />
-                        
-                        <EventDetails date={invitationData.date} time={invitationData.time} />
-
-                        <Footer />
-
-                    </main>
-                </div>
-            );
-        }
-
-        // Komponen Header
-        function Header({ title, subtitle }) {
-            return (
-                <div className="text-center">
-                    <h1 className="text-5xl sm:text-6xl font-title font-semibold text-brand-dark" style={{ textShadow: '2px 2px 0px white' }}>
-                        {title}
-                    </h1>
-                    <h2 className="text-4xl sm:text-5xl font-title font-semibold text-brand-accent" style={{ textShadow: '2px 2px 0px white', transform: 'translateY(-10px)' }}>
-                        {subtitle}
-                    </h2>
-                </div>
-            );
-        }
-
-        // Komponen Kartu Profil (Polaroid)
-        function ProfileCard({ name, imageUrl }) {
-            return (
-                <div className="flex flex-col items-center w-full max-w-xs">
-                    {/* Latar Belakang Grid Biru */}
-                    <div className="grid-background p-5 rounded-xl shadow-lg w-full">
-                        {/* Frame Polaroid */}
-                        <div className="bg-white p-4 pb-3 rounded-lg shadow-inner transform -rotate-3 transition-transform duration-300 hover:rotate-0 hover:scale-105">
-                            <div className="w-full h-64 sm:h-72 bg-gray-200 rounded-md overflow-hidden">
-                                <img 
-                                    src={imageUrl} 
-                                    alt={name} 
-                                    className="w-full h-full object-cover object-center"
-                                    onError={(e) => e.target.src = 'https://placehold.co/400x500?text=Foto+Profil'}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    {/* Nama */}
-                    <h3 className="text-5xl font-name text-brand-dark mt-4" style={{ textShadow: '1px 1px 0px white' }}>
-                        {name}
-                    </h3>
-                </div>
-            );
-        }
-
-        // Komponen Info Judul Skripsi
-        function ThesisInfo({ title }) {
-            return (
-                <div className="text-center px-4">
-                    <h4 className="text-lg font-bold text-brand-dark underline decoration-brand-accent decoration-4 underline-offset-4">
-                        Judul Skripsi:
-                    </h4>
-                    <p className="text-base font-medium text-brand-light mt-2">
-                        {title}
-                    </p>
-                </div>
-            );
-        }
-
-        // Komponen Detail Acara (Box Kuning)
-        function EventDetails({ date, time }) {
-            return (
-                <div className="w-full bg-brand-accent rounded-2xl shadow-lg p-5 transition-all duration-300 hover:shadow-xl hover:bg-brand-accent-dark">
-                    <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0 sm:space-x-4 text-brand-dark font-bold">
-                        
-                        {/* Tanggal */}
-                        <div className="flex items-center gap-3">
-                            <div className="bg-white/50 p-2 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                            <span className="text-lg">{date}</span>
-                        </div>
-                        
-                        {/* Pemisah */}
-                        <span className="hidden sm:inline text-2xl opacity-50">-</span>
-
-                        {/* Waktu */}
-                        <div className="flex items-center gap-3">
-                            <div className="bg-white/50 p-2 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <span className="text-lg">{time}</span>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
-
-        // Komponen Footer
-        function Footer() {
-            return (
-                <footer className="text-center text-sm text-brand-light/70 pt-8">
-                    <p>
-                        Dibuat ulang dengan React & Tailwind CSS.
-                    </p>
-                    <a 
-                        href="https://github.com/Ikiiloh/undangan-sempro" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="hover:text-brand-dark hover:underline"
-                    >
-                        Lihat GitHub Asli
-                    </a>
-                </footer>
-            );
-        }
-
-        // Komponen Doodle Latar Belakang
-        function BackgroundDoodles() {
-            return (
-                <>
-                    {/* Pola Titik-titik */}
-                    <svg width="100" height="100" className="absolute top-5 right-5 text-brand-grid opacity-60 z-0 animate-float">
-                        <defs>
-                            <pattern id="dots" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-                                <circle fill="currentColor" cx="2" cy="2" r="2" />
-                            </pattern>
-                        </defs>
-                        <rect width="100" height="100" fill="url(#dots)" />
-                    </svg>
-
-                    {/* Garis Meringis */}
-                    <svg width="100" height="100" viewBox="0 0 100 100" className="absolute top-1/4 left-5 text-white/80 opacity-70 z-0 animate-float" style={{ animationDelay: '2s' }}>
-                        <path d="M10 10 Q 30 40, 50 10 T 90 10" stroke="currentColor" fill="transparent" strokeWidth="8" strokeLinecap="round" />
-                        <path d="M10 30 Q 30 60, 50 30 T 90 30" stroke="currentColor" fill="transparent" strokeWidth="8" strokeLinecap="round" />
-                    </svg>
-
-                    {/* Lingkaran */}
-                    <svg width="150" height="150" viewBox="0 0 100 100" className="absolute bottom-10 left-10 text-brand-grid opacity-50 z-0 animate-spinSlow">
-                        <circle cx="50" cy="50" r="40" stroke="currentColor" fill="transparent" strokeWidth="10" />
-                        <circle cx="50" cy="50" r="20" fill="currentColor" />
-                    </svg>
-
-                     {/* Garis Putih */}
-                    <svg width="120" height="120" viewBox="0 0 100 100" className="absolute bottom-1/3 right-5 text-white/80 opacity-70 z-0 animate-float" style={{ animationDelay: '1s' }}>
-                        <path d="M10 80 L 80 10" stroke="currentColor" fill="transparent" strokeWidth="12" strokeLinecap="round" />
-                        <path d="M20 90 L 90 20" stroke="currentColor" fill="transparent" strokeWidth="12" strokeLinecap="round" />
-                    </svg>
-                </>
-            );
-        }
-
-        // 8. Render Aplikasi React ke Root
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-
-    </script>
-
-</body>
+    <!-- 5. Titik Masuk (Entry Point) Aplikasi Vite -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
