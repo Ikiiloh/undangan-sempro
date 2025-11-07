@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 // Komponen Utama
 function App() {
   // Data untuk undangan (bisa diganti)
@@ -81,12 +83,23 @@ function Header({ title, subtitle }: { title: string; subtitle: string }) {
 
 // Komponen Kartu Profil (Polaroid)
 function ProfileCard({ name, imageUrl }: { name: string; imageUrl: string }) {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
+
   return (
     <div className="flex flex-col items-center w-full max-w-xs">
       {/* Latar Belakang Grid Biru */}
       <div className="grid-background p-5 rounded-xl shadow-lg w-full">
         {/* Frame Polaroid */}
-        <div className="bg-white p-4 pb-3 rounded-lg shadow-inner transform -rotate-3 transition-transform duration-300 hover:rotate-0 hover:scale-105">
+        <div
+          className={`bg-white p-4 pb-3 rounded-lg shadow-inner transform transition-transform duration-300 ${
+            isClicked ? 'rotate-0 scale-105' : '-rotate-3'
+          }`}
+          onClick={handleClick}
+        >
           <div className="w-full h-64 sm:h-72 bg-gray-200 rounded-md overflow-hidden">
             <img
               src={imageUrl}
@@ -203,18 +216,27 @@ function EventDetails({ date, time, location }: { date: string; time: string; lo
 // Komponen Footer
 function Footer() {
   return (
-    <footer className="text-center font-title text-xs text-brand-dark mt-12 mb-4">
-      <p>
-        Dibuat oleh{" "}
-        <a
-          href="https://github.com/Ikiiloh"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-brand-accent hover:underline"
+    <footer className="w-full text-center mt-12 mb-4">
+      <a
+        href="https://github.com/Ikiiloh"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-block text-brand-dark hover:text-brand-accent transition-colors duration-300"
+        aria-label="GitHub Profile"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 64 64"
+          className="w-10 h-10"
+          role="img"
         >
-          Ikiiloh
-        </a>
-      </p>
+          <title>Github</title>
+          <path
+            d="M32 0a32.021 32.021 0 0 0-10.1 62.4c1.6.3 2.2-.7 2.2-1.5v-6c-8.9 1.9-10.8-3.8-10.8-3.8-1.5-3.7-3.6-4.7-3.6-4.7-2.9-2 .2-1.9.2-1.9 3.2.2 4.9 3.3 4.9 3.3 2.9 4.9 7.5 3.5 9.3 2.7a6.93 6.93 0 0 1 2-4.3c-7.1-.8-14.6-3.6-14.6-15.8a12.27 12.27 0 0 1 3.3-8.6 11.965 11.965 0 0 1 .3-8.5s2.7-.9 8.8 3.3a30.873 30.873 0 0 1 8-1.1 30.292 30.292 0 0 1 8 1.1c6.1-4.1 8.8-3.3 8.8-3.3a11.965 11.965 0 0 1 .3 8.5 12.1 12.1 0 0 1 3.3 8.6c0 12.3-7.5 15-14.6 15.8a7.746 7.746 0 0 1 2.2 5.9v8.8c0 .9.6 1.8 2.2 1.5A32.021 32.021 0 0 0 32 0z"
+            fill="currentColor"
+          />
+        </svg>
+      </a>
     </footer>
   );
 }
