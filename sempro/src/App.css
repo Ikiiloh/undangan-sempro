@@ -1,42 +1,187 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.invitation-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px 50px;
+  max-width: 800px;
+  width: calc(100% - 40px); /* Spacing from screen edges */
+  margin: 20px auto; /* Centering and vertical spacing */
   text-align: center;
+  border: 1px solid #A8D8FF;
+  position: relative;
+  overflow: hidden;
+  word-wrap: break-word; /* Prevent long words from overflowing */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Decorative shapes */
+.invitation-card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 200px;
+  height: 200px;
+  background-color: #A8D8FF;
+  border-radius: 50%;
+  opacity: 0.3;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.invitation-card::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  right: -70px;
+  width: 250px;
+  height: 250px;
+  background-color: #3A86FF;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.header h1 {
+  font-family: 'Pacifico', cursive;
+  color: #3A86FF;
+  font-size: 3.5em;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2em;
+  color: #555;
+  margin: 0;
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: #3A86FF;
+  margin: 30px 0;
+  opacity: 0.5;
+}
+
+.content {
+  color: #1E293B;
+}
+
+.content h2 {
+  color: #3A86FF;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+}
+
+.student-info, .seminar-details, .panel-list {
+  margin-bottom: 30px;
+}
+
+.student-info p, .seminar-details p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin: 5px 0;
+}
+
+.panel-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.panel-list li {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+
+.panel-list .role {
+  font-weight: 600;
+  color: #3A86FF;
+}
+
+.educational-tidbit {
+  background-color: #F0F8FF;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 30px;
+  border-left: 5px solid #3A86FF;
+  text-align: left;
+}
+
+.educational-tidbit h3 {
+  margin: 0 0 10px 0;
+  color: #3A86FF;
+}
+
+.educational-tidbit p {
+  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.footer {
+  margin-top: 40px;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #3A86FF;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .invitation-card {
+    padding: 30px 25px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .header h1 {
+    font-size: 2.8em;
+  }
+
+  .header p {
+    font-size: 1.1em;
+  }
+
+  .content h2 {
+    font-size: 1.6em;
+  }
+
+  .student-info p, .seminar-details p, .panel-list li {
+    font-size: 1em;
+  }
+
+  .footer {
+    font-size: 1.1em;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 480px) {
+  .invitation-card {
+    padding: 25px 20px;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .header h1 {
+    font-size: 2.2em;
+  }
 
-.read-the-docs {
-  color: #888;
+  .header p {
+    font-size: 1em;
+  }
+
+  .content h2 {
+    font-size: 1.4em;
+  }
+
+  .student-info p, .seminar-details p, .panel-list li {
+    font-size: 0.9em;
+  }
+
+  .educational-tidbit {
+    padding: 15px;
+  }
+
+  .footer {
+    font-size: 1em;
+  }
+
+  /* Hide decorative shapes on very small screens to reduce clutter */
+  .invitation-card::before,
+  .invitation-card::after {
+    display: none;
+  }
 }
