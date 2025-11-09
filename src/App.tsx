@@ -12,7 +12,7 @@ function App() {
     date: "Kamis, 20 November",
     time: "10:00 - Selesai",
     location: "Gedung Psikologi dan Kesehatan", // Tambahkan lokasi di sini
-    imageUrl: "https://res.cloudinary.com/dlcljeoih/image/upload/v1762683179/12_to5qeo.jpg", // Menggunakan placeholder
+    imageUrl: "https://res.cloudinary.com/dlcljeoih/image/upload/v1762683478/12_k4d1ek.jpg", // Menggunakan placeholder
   };
 
   return (
