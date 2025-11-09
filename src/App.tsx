@@ -10,9 +10,13 @@ function App() {
     thesisTitle:
       "Hubungan Antara Kebersyukuran dengan Social Comparison pada Mahasiswa Pengguna Instagram di UIN Imam Bonjol Padang",
     date: "Kamis, 20 November",
-    time: "10:00 - Selesai",
-    location: "Gedung Psikologi dan Kesehatan", // Tambahkan lokasi di sini
-    imageUrl: "https://res.cloudinary.com/dlcljeoih/image/upload/v1762683478/12_k4d1ek.jpg", // Menggunakan placeholder
+    time: "13:00 - Selesai",
+    location: "Gedung Psikologi", // Tambahkan lokasi di sini
+    imageUrl: "https://res.cloudinary.com/dlcljeoih/image/upload/v1762686583/IMG_9252_kfrz5g.jpg", // Menggunakan placeholder
+    examiners: [
+      { name: "Nama Dosen Penguji 1", role: "Dosen Penguji 1" },
+      { name: "Nama Dosen Penguji 2", role: "Dosen Penguji 2" },
+    ],
   };
 
   return (
@@ -39,6 +43,8 @@ function App() {
           time={invitationData.time}
           location={invitationData.location}
         />
+
+        <ExaminerDetails examiners={invitationData.examiners} />
       </main>
 
       <Footer />
@@ -208,6 +214,43 @@ function EventDetails({ date, time, location }: { date: string; time: string; lo
           </div>
           <span className="text-lg">{location}</span>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// Komponen Detail Dosen Penguji
+function ExaminerDetails({ examiners }: { examiners: { name: string; role: string }[] }) {
+  return (
+    <div className="w-full bg-brand-accent/10 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-5 transition-all duration-300 hover:shadow-xl">
+      <div className="flex flex-col items-start gap-4 text-brand-dark font-bold">
+        <h4 className="text-lg font-bold text-brand-dark">
+          Dosen Penguji:
+        </h4>
+        {examiners.map((examiner, index) => (
+          <div key={index} className="flex items-center gap-3">
+            <div className="bg-white/30 p-2 rounded-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </div>
+            <div>
+              <span className="text-lg">{examiner.name}</span>
+              <p className="text-sm font-medium text-brand-light">{examiner.role}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
