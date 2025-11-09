@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import bgsound from './assets/bgsound.mp3';
 
 // Komponen Utama
 function App() {
@@ -18,6 +19,44 @@ function App() {
       { name: "Mai Tiza Husna, M.Psi., Psikolog", role: "Dosen Penguji 2" },
     ],
   };
+
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isMusicPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsMusicPlaying(!isMusicPlaying);
+    }
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.play().then(() => {
+        setIsMusicPlaying(true);
+      }).catch(() => {
+        const playMusicOnFirstInteraction = () => {
+          if (audio && !isMusicPlaying) {
+            audio.play().then(() => {
+              setIsMusicPlaying(true);
+            }).catch(error => {
+              console.log("Autoplay was prevented:", error);
+            });
+          }
+          document.removeEventListener('click', playMusicOnFirstInteraction);
+        };
+        document.addEventListener('click', playMusicOnFirstInteraction);
+        return () => {
+          document.removeEventListener('click', playMusicOnFirstInteraction);
+        };
+      });
+    }
+  }, []);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center p-4 overflow-hidden">
@@ -48,6 +87,24 @@ function App() {
       </main>
 
       <Footer />
+
+      <audio ref={audioRef} src={bgsound} loop />
+      <button
+        onClick={toggleMusic}
+        className="fixed bottom-5 right-5 bg-blue-500 text-white p-3 rounded-full shadow-lg focus:outline-none z-50"
+        aria-label="Toggle Music"
+      >
+        {isMusicPlaying ? (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        )}
+      </button>
     </div>
   );
 }
@@ -135,7 +192,7 @@ function ThesisInfo({ title }: { title: string }) {
   return (
     <div className="text-center px-4">
       <h4 className="text-lg font-bold text-brand-dark underline decoration-brand-accent decoration-4 underline-offset-4">
-        Judul Skripsi:
+        Judul:
       </h4>
       <p className="text-base font-medium text-brand-light mt-4">{title}</p>
     </div>
