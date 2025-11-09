@@ -1,11 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import bgsound from './assets/bgsound.mp3';
+import bgsd from './assets/bgsd.mp3';
+import underline from './assets/underline.svg';
 
 // Komponen Utama
 function App() {
   // Data untuk undangan (bisa diganti)
   const invitationData = {
     name: "Eka Mulyani Putri Pily",
+    nim: "(2215040101)",
     title: "Undangan",
     subtitle: "Seminar Proposal",
     thesisTitle:
@@ -58,13 +62,49 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    // Memblokir klik kanan
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    // Memblokir tombol keyboard
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // F12
+      if (e.keyCode === 123) {
+        e.preventDefault();
+      }
+      // Ctrl+Shift+I
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+        e.preventDefault();
+      }
+      // Ctrl+Shift+C (Shortcut lain untuk DevTools)
+      if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+        e.preventDefault();
+      }
+      // Ctrl+U (Lihat Source)
+      if (e.ctrlKey && e.keyCode === 85) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <div className="relative min-h-screen flex flex-col items-center p-4 overflow-hidden">
       {/* Komponen untuk doodle di latar belakang */}
       <BackgroundDoodles />
 
       {/* Konten Utama */}
-      <main className="relative z-10 w-full max-w-sm mx-auto flex flex-col items-center flex-grow space-y-8 pt-8">
+      <main className="relative z-10 w-full max-w-sm mx-auto flex flex-col items-center flex-grow space-y-7 pt-8">
         <Header
           title={invitationData.title}
           subtitle={invitationData.subtitle}
@@ -72,6 +112,7 @@ function App() {
 
         <ProfileCard
           name={invitationData.name}
+          nim={invitationData.nim}
           imageUrl={invitationData.imageUrl}
         />
 
@@ -88,7 +129,7 @@ function App() {
 
       <Footer />
 
-      <audio ref={audioRef} src={bgsound} loop />
+      <audio ref={audioRef} src={bgsd} loop />
       <button
         onClick={toggleMusic}
         className="fixed bottom-5 right-5 bg-blue-500 text-white p-3 rounded-full shadow-lg focus:outline-none z-50"
@@ -132,7 +173,7 @@ function Header({ title, subtitle }: { title: string; subtitle: string }) {
     <div className="text-center">
       <WavyText
         text={title}
-        className="text-5xl sm:text-6xl font-title font-semibold text-brand-dark"
+        className="text-5xl sm:text-6xl font-title font-semibold text-brand-blue"
         style={{ textShadow: "2px 2px 0px white" }}
       />
       <WavyText
@@ -145,12 +186,15 @@ function Header({ title, subtitle }: { title: string; subtitle: string }) {
 }
 
 // Komponen Kartu Profil (Polaroid)
-function ProfileCard({ name, imageUrl }: { name: string; imageUrl: string }) {
+function ProfileCard({ name, nim, imageUrl }: { name: string; nim: string; imageUrl: string }) {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
+
+  // Definisikan gambar placeholder Anda di sini
+  const placeholderImage = "https://placehold.co/400x500?text=😌";
 
   return (
     <div className="flex flex-col items-center w-full max-w-xs">
@@ -163,17 +207,20 @@ function ProfileCard({ name, imageUrl }: { name: string; imageUrl: string }) {
           }`}
           onClick={handleClick}
         >
-          <div className="w-full h-64 sm:h-72 bg-gray-200 rounded-md overflow-hidden">
-            <img
-              src={imageUrl}
-              alt={name}
-              className="w-full h-full object-cover object-center"
-              onError={(e) =>
-                (e.currentTarget.src =
-                  "https://placehold.co/400x500?text=Foto+Profil")
-              }
-            />
+          {/* --- INI BAGIAN YANG DIUBAH --- */}
+          <div
+            className="w-full h-64 sm:h-72 bg-gray-200 rounded-md overflow-hidden bg-cover bg-center"
+            style={{
+              // Terapkan gambar sebagai background.
+              // Jika imageUrl gagal, browser akan otomatis menggunakan placeholderImage.
+              backgroundImage: `url(${imageUrl}), url(${placeholderImage})`,
+            }}
+            role="img" // Penting untuk aksesibilitas
+            aria-label={name} // Penting untuk aksesibilitas
+          >
+            {/* Tag <img /> sudah dihapus dari sini */}
           </div>
+          {/* --- AKHIR BAGIAN YANG DIUBAH --- */}
         </div>
       </div>
       {/* Nama */}
@@ -183,6 +230,7 @@ function ProfileCard({ name, imageUrl }: { name: string; imageUrl: string }) {
       >
         {name}
       </h3>
+      <p className="text-3xl font-title text-brand-blue mt-3">{nim}</p>
     </div>
   );
 }
@@ -191,10 +239,13 @@ function ProfileCard({ name, imageUrl }: { name: string; imageUrl: string }) {
 function ThesisInfo({ title }: { title: string }) {
   return (
     <div className="text-center px-4">
-      <h4 className="text-lg font-bold text-brand-dark underline decoration-brand-accent decoration-4 underline-offset-4">
-        Judul:
-      </h4>
-      <p className="text-base font-medium text-brand-light mt-4">{title}</p>
+      <div className="relative inline-block pb-2">
+        <h4 className="text-lg font-bold text-brand-dark">
+          Judul:
+        </h4>
+        <img src={underline} alt="underline" className="absolute -bottom-0 left-0 w-full h-auto" />
+      </div>
+      <p className="text-1xl font-title text-brand-light mt-4">{title}</p>
     </div>
   );
 }
@@ -202,7 +253,7 @@ function ThesisInfo({ title }: { title: string }) {
 // Komponen Detail Acara (Box Kuning)
 function EventDetails({ date, time, location }: { date: string; time: string; location: string }) {
   return (
-    <div className="w-full bg-brand-accent/10 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-5 transition-all duration-300 hover:shadow-xl">
+    <div className="w-full bg-brand-blue/10 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-5 transition-all duration-300 hover:shadow-xl">
       <div className="flex flex-col items-start gap-4 text-brand-dark font-bold">
         {/* Tanggal */}
         <div className="flex items-center gap-3">
@@ -279,7 +330,7 @@ function EventDetails({ date, time, location }: { date: string; time: string; lo
 // Komponen Detail Dosen Penguji
 function ExaminerDetails({ examiners }: { examiners: { name: string; role: string }[] }) {
   return (
-    <div className="w-full bg-brand-accent/10 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-5 transition-all duration-300 hover:shadow-xl">
+    <div className="w-full bg-brand-blue/10 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-5 transition-all duration-300 hover:shadow-xl">
       <div className="flex flex-col items-start gap-4 text-brand-dark font-bold">
         <h4 className="text-lg font-bold text-brand-dark">
           Dosen Penguji:
@@ -321,7 +372,7 @@ function Footer() {
         href="https://github.com/Ikiiloh"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-block text-brand-dark hover:text-brand-accent transition-colors duration-300"
+        className="inline-block text-brand-dark hover:text-brand-blue transition-colors duration-300"
         aria-label="GitHub Profile"
       >
         <svg
