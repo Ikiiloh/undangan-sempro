@@ -14,8 +14,8 @@ function App() {
     location: "Gedung Psikologi", // Tambahkan lokasi di sini
     imageUrl: "https://res.cloudinary.com/dlcljeoih/image/upload/v1762686583/IMG_9252_kfrz5g.jpg", // Menggunakan placeholder
     examiners: [
-      { name: "Nama Dosen Penguji 1", role: "Dosen Penguji 1" },
-      { name: "Nama Dosen Penguji 2", role: "Dosen Penguji 2" },
+      { name: "Dr. Hasneli, M.Ag", role: "Dosen Penguji 1" },
+      { name: "Mai Tiza Husna, M.Psi., Psikolog", role: "Dosen Penguji 2" },
     ],
   };
 
