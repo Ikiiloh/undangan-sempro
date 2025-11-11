@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import bgsound from './assets/bgsound.mp3';
-import bgsd from './assets/bgsd.mp3';
 import underline from './assets/underline.svg';
 
 // Komponen Utama
