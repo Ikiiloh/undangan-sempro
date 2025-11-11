@@ -23,17 +23,7 @@ function App() {
   };
 
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // State untuk loading
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  // Efek untuk simulasi loading
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000); // Durasi loading 3 detik
-
-    return () => clearTimeout(timer); // Cleanup timer
-  }, []);
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -45,30 +35,6 @@ function App() {
       setIsMusicPlaying(!isMusicPlaying);
     }
   };
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.play().then(() => {
-        setIsMusicPlaying(true);
-      }).catch(() => {
-        const playMusicOnFirstInteraction = () => {
-          if (audio && !isMusicPlaying) {
-            audio.play().then(() => {
-              setIsMusicPlaying(true);
-            }).catch(error => {
-              console.log("Autoplay was prevented:", error);
-            });
-          }
-          document.removeEventListener('click', playMusicOnFirstInteraction);
-        };
-        document.addEventListener('click', playMusicOnFirstInteraction);
-        return () => {
-          document.removeEventListener('click', playMusicOnFirstInteraction);
-        };
-      });
-    }
-  }, []);
 
   useEffect(() => {
     // Memblokir klik kanan
@@ -108,58 +74,54 @@ function App() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center p-4 overflow-hidden">
-      {isLoading ? (
-        <LoadingScreen />
-      ) : (
-        <>
-          {/* Komponen untuk doodle di latar belakang */}
-          <BackgroundDoodles />
+      <>
+        {/* Komponen untuk doodle di latar belakang */}
+        <BackgroundDoodles />
 
-          {/* Konten Utama */}
-          <main className="relative z-10 w-full max-w-sm mx-auto flex flex-col items-center flex-grow space-y-7 pt-8">
-            <Header
-              title={invitationData.title}
-              subtitle={invitationData.subtitle}
-            />
+        {/* Konten Utama */}
+        <main className="relative z-10 w-full max-w-sm mx-auto flex flex-col items-center flex-grow space-y-7 pt-8">
+          <Header
+            title={invitationData.title}
+            subtitle={invitationData.subtitle}
+          />
 
-            <ProfileCard
-              name={invitationData.name}
-              nim={invitationData.nim}
-              imageUrl={invitationData.imageUrl}
-            />
+          <ProfileCard
+            name={invitationData.name}
+            nim={invitationData.nim}
+            imageUrl={invitationData.imageUrl}
+          />
 
-            <ThesisInfo title={invitationData.thesisTitle} />
+          <ThesisInfo title={invitationData.thesisTitle} />
 
-            <EventDetails
-              date={invitationData.date}
-              time={invitationData.time}
-              location={invitationData.location}
-            />
+          <EventDetails
+            date={invitationData.date}
+            time={invitationData.time}
+            location={invitationData.location}
+          />
 
-            <ExaminerDetails examiners={invitationData.examiners} />
-          </main>
+          <ExaminerDetails examiners={invitationData.examiners} />
+        </main>
 
-          <Footer />
+        <Footer />
 
-          <audio ref={audioRef} src={bgsound} loop />
-          <button
-            onClick={toggleMusic}
-            className="fixed bottom-5 right-5 bg-blue-500 text-white p-3 rounded-full shadow-lg focus:outline-none z-50"
-            aria-label="Toggle Music"
-          >
-            {isMusicPlaying ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            )}
-          </button>
-        </>
-      )}
+        <audio ref={audioRef} src={bgsound} loop />
+        <button
+          onClick={toggleMusic}
+          className="fixed bottom-5 right-5 bg-blue-500 text-white p-3 rounded-full shadow-lg focus:outline-none z-50"
+          aria-label="Toggle Music"
+        >
+          {isMusicPlaying ? (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          )}
+        </button>
+      </>
     </div>
   );
 }
@@ -513,16 +475,6 @@ function BackgroundDoodles() {
         />
       </svg>
     </>
-  );
-}
-
-function LoadingScreen() {
-  return (
-    <div className="fixed inset-0 bg-white flex flex-col items-center justify-center z-50 text-brand-blue">
-      <div className="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-brand-blue mb-5"></div>
-      <WavyText text="Memuat..." className="text-4xl font-bold" />
-      <p className="text-lg mt-2 text-brand-dark">Silakan tunggu sebentar...</p>
-    </div>
   );
 }
 

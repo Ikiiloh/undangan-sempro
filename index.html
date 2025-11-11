@@ -73,8 +73,113 @@
         },
       };
     </script>
+    <style>
+        /* Pengaturan dasar untuk halaman */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        /* Kontainer utama untuk loading screen */
+        .loader-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw; /* Lebar penuh viewport */
+            height: 100vh; /* Tinggi penuh viewport */
+            
+            /* Warna latar belakang biru sesuai permintaan */
+            background-color: #3b82f6; /* Ini adalah warna biru (Tailwind Blue-500) */
+            position: fixed; /* Memastikan loader menutupi seluruh layar */
+            top: 0;
+            left: 0;
+            z-index: 9999; /* Memastikan loader di atas konten lain */
+        }
+
+        /* Pembungkus untuk 4 kotak, diputar 45 derajat */
+        .loader {
+            width: 80px; /* Ukuran loader */
+            height: 80px;
+            
+            /* Ini bagian "mereng" (memutar 45 derajat) */
+            transform: rotate(45deg);
+            
+            /* Menggunakan grid untuk menyusun 4 kotak kecil */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 8px; /* Jarak antar kotak */
+        }
+
+        /* Gaya untuk masing-masing kotak kecil */
+        .box {
+            width: 100%;
+            height: 100%;
+            
+            /* Warna kotak putih sesuai permintaan */
+            background-color: white;
+            
+            border-radius: 8px; /* Sedikit lengkungan di sudut */
+            
+            /* Menjalankan animasi 'blink' */
+            animation: blink 1.2s infinite ease-in-out;
+        }
+
+        /* Definisi animasi 'blink' */
+        @keyframes blink {
+            0%, 100% {
+                /* Mulai dan akhir: kotak sedikit mengecil dan transparan */
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            50% {
+                /* Tengah animasi: ukuran normal dan solid */
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* * Memberi jeda (delay) animasi yang berbeda untuk setiap kotak.
+          * Ini menciptakan efek putaran yang berurutan.
+          * Urutannya: box-4 -> box-2 -> box-1 -> box-3 (searah jarum jam)
+        */
+        
+        /* Kotak 1: Kiri atas */
+        .box-1 {
+            animation-delay: 0.3s;
+        }
+        
+        /* Kotak 2: Kanan atas */
+        .box-2 {
+            animation-delay: 0.15s;
+        }
+        
+        /* Kotak 3: Kiri bawah */
+        .box-3 {
+            animation-delay: 0.45s;
+        }
+        
+        /* Kotak 4: Kanan bawah */
+        .box-4 {
+            animation-delay: 0s;
+        }
+
+    </style>
   </head>
   <body class="bg-brand-bg font-sans">
+    <!-- Ini adalah elemen untuk loading screen -->
+    <div id="loading-screen" class="loader-container">
+        <div class="loader">
+            <!-- 4 kotak kecil yang menyusun loader -->
+            <div class="box box-1"></div>
+            <div class="box box-2"></div>
+            <div class="box box-3"></div>
+            <div class="box box-4"></div>
+        </div>
+    </div>
     <!-- 4. Target Root untuk React -->
     <div id="root"></div>
 
