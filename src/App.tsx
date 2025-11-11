@@ -37,6 +37,19 @@ function App() {
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen) {
+        loadingScreen.style.display = 'none';
+      }
+      // Re-enable scrolling by removing the 'loading' class from the body
+      document.body.classList.remove('loading');
+    }, 1000); // 2-second delay
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     // Memblokir klik kanan
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();

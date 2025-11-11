@@ -83,6 +83,10 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
+        body.loading {
+            overflow: hidden;
+        }
+
         /* Kontainer utama untuk loading screen */
         .loader-container {
             display: flex;
@@ -169,7 +173,7 @@
 
     </style>
   </head>
-  <body class="bg-brand-bg font-sans">
+  <body class="bg-brand-bg font-sans loading">
     <!-- Ini adalah elemen untuk loading screen -->
     <div id="loading-screen" class="loader-container">
         <div class="loader">
