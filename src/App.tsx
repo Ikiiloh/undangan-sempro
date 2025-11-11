@@ -110,6 +110,7 @@ function App() {
             date={invitationData.date}
             time={invitationData.time}
             location={invitationData.location}
+            thesisTitle={invitationData.thesisTitle}
           />
 
           <ExaminerDetails examiners={invitationData.examiners} />
@@ -240,7 +241,42 @@ function ThesisInfo({ title }: { title: string }) {
 }
 
 // Komponen Detail Acara (Box Kuning)
-function EventDetails({ date, time, location }: { date: string; time: string; location: string }) {
+function EventDetails({ date, time, location, thesisTitle }: { date: string; time: string; location: string; thesisTitle: string }) {
+  const generateGoogleCalendarUrl = (eventDate: string, eventTime: string, eventTitle: string, eventLocation: string) => {
+    // Assuming the year is the current year (2025)
+    const year = new Date().getFullYear();
+
+    // Parse date: "Kamis, 20 November" -> "20 November"
+    const datePart = eventDate.split(', ')[1];
+    const [day, monthName] = datePart.split(' ');
+
+    const monthMap: { [key: string]: string } = {
+      "Januari": "01", "Februari": "02", "Maret": "03", "April": "04",
+      "Mei": "05", "Juni": "06", "Juli": "07", "Agustus": "08",
+      "September": "09", "Oktober": "10", "November": "11", "Desember": "12"
+    };
+    const month = monthMap[monthName];
+
+    // Parse time: "13:00 - Selesai" -> "13:00" (start) and "14:00" (end, assuming 1 hour)
+    const startTimeStr = eventTime.split(' ')[0];
+    const [startHour, startMinute] = startTimeStr.split(':').map(Number);
+
+    const startDate = new Date(year, parseInt(month) - 1, parseInt(day), startHour, startMinute);
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // Add 1 hour
+
+    const formatDateTime = (dt: Date) => {
+      return dt.toISOString().replace(/[-:]|\.\d{3}/g, '');
+    };
+
+    const dates = `${formatDateTime(startDate)}/${formatDateTime(endDate)}`;
+    const details = encodeURIComponent(`Seminar Proposal: ${eventTitle}`);
+    const locationEncoded = encodeURIComponent(eventLocation);
+
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${details}&dates=${dates}&location=${locationEncoded}&sf=true&output=xml`;
+  };
+
+  const calendarUrl = generateGoogleCalendarUrl(date, time, thesisTitle, location);
+
   return (
     <div className="w-full bg-brand-blue/10 backdrop-blur-lg border border-white/30 rounded-2xl shadow-lg p-5 transition-all duration-300 hover:shadow-xl">
       <div className="flex flex-col items-start gap-4 text-brand-dark font-bold">
@@ -262,7 +298,14 @@ function EventDetails({ date, time, location }: { date: string; time: string; lo
               />
             </svg>
           </div>
-          <span className="text-lg">{date}</span>
+          <a
+            href={calendarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg transition-all duration-300 hover:scale-105 hover:text-brand-accent"
+          >
+            {date}
+          </a>
         </div>
 
         {/* Waktu */}
@@ -283,7 +326,14 @@ function EventDetails({ date, time, location }: { date: string; time: string; lo
               />
             </svg>
           </div>
-          <span className="text-lg">{time}</span>
+          <a
+            href={calendarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg transition-all duration-300 hover:scale-105 hover:text-brand-accent"
+          >
+            {time}
+          </a>
         </div>
 
         {/* Lokasi */}
@@ -309,7 +359,14 @@ function EventDetails({ date, time, location }: { date: string; time: string; lo
               />
             </svg>
           </div>
-          <span className="text-lg">{location}</span>
+          <a
+            href="https://maps.app.goo.gl/658C2MG4Rx74ocQd7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg transition-all duration-300 hover:scale-105 hover:text-brand-accent"
+          >
+            {location}
+          </a>
         </div>
       </div>
     </div>
