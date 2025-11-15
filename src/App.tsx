@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import bgsound from './assets/bgsound.mp3';
 import underline from './assets/underline.svg';
-import card from './assets/card.svg';
 
 // Komponen Utama
 function App() {
@@ -190,10 +189,7 @@ function ProfileCard({ name, nim, imageUrl }: { name: string; nim: string; image
   return (
     <div className="flex flex-col items-center w-full max-w-xs">
       {/* Latar Belakang Grid Biru */}
-      <div
-        className="p-5 rounded-xl shadow-lg w-full bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${card})` }}
-      >
+      <div className="grid-background p-5 rounded-xl shadow-lg w-full">
         {/* Frame Polaroid */}
         <div
           className={`bg-white p-4 pb-3 rounded-lg shadow-inner transform transition-transform duration-300 ${
