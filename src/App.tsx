@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import bgsound from './assets/bgsound.mp3';
 import underline from './assets/underline.svg';
+import card from './assets/card.svg';
 
 // Komponen Utama
 function App() {
@@ -12,8 +13,8 @@ function App() {
     subtitle: "Seminar Proposal",
     thesisTitle:
       "Hubungan Antara Kebersyukuran dengan Social Comparison pada Mahasiswa Pengguna Instagram di UIN Imam Bonjol Padang",
-    date: "Kamis, 20 November",
-    time: "13:00 - Selesai",
+    date: "Selasa, 18 November",
+    time: "11:00 - Selesai",
     location: "Gedung Psikologi", // Tambahkan lokasi di sini
     imageUrl: "https://res.cloudinary.com/dlcljeoih/image/upload/v1762686583/IMG_9252_kfrz5g.jpg", // Menggunakan placeholder
     examiners: [
@@ -189,7 +190,10 @@ function ProfileCard({ name, nim, imageUrl }: { name: string; nim: string; image
   return (
     <div className="flex flex-col items-center w-full max-w-xs">
       {/* Latar Belakang Grid Biru */}
-      <div className="grid-background p-5 rounded-xl shadow-lg w-full">
+      <div
+        className="p-5 rounded-xl shadow-lg w-full bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${card})` }}
+      >
         {/* Frame Polaroid */}
         <div
           className={`bg-white p-4 pb-3 rounded-lg shadow-inner transform transition-transform duration-300 ${
