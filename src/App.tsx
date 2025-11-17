@@ -12,7 +12,7 @@ function App() {
     subtitle: "Seminar Proposal",
     thesisTitle:
       "Hubungan Antara Kebersyukuran dengan Social Comparison pada Mahasiswa Pengguna Instagram di UIN Imam Bonjol Padang",
-    date: "Selasa, 18 November",
+    date: "Kamis, 20 November",
     time: "11:00 - Selesai",
     location: "Gedung Psikologi", // Tambahkan lokasi di sini
     imageUrl: "https://res.cloudinary.com/dlcljeoih/image/upload/v1762686583/IMG_9252_kfrz5g.jpg", // Menggunakan placeholder
